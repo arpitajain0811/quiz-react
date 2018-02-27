@@ -86,5 +86,25 @@ const route = [
       });
     },
   },
+  {
+    method: 'GET',
+    path: '/questions/local',
+    handler: (request, response) => {
+      Models.questions.findAll().then((result) => {
+        console.log(result);
+        console.log(result.length);
+        if (result.length === 0) {
+          response({
+            message: 'empty',
+          });
+        } else {
+          response({
+            result,
+            message: 'not empty',
+          });
+        }
+      });
+    },
+  },
 ];
 module.exports = route;
