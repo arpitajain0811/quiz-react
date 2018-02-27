@@ -2,22 +2,22 @@
   "development": {
     "username": "arpitajain",
     "password": null,
-    "database": "database_development",
+    "database": "quiz",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "test": {
     "username": "arpitajain",
     "password": null,
-    "database": "database_test",
+    "database": "quiz_test",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "arpitajain",
     "password": null,
     "database": "database_production",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
