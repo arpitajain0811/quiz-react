@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     questionid: { type: DataTypes.INTEGER, unique: true },
     question: DataTypes.STRING,
     answer: DataTypes.STRING,
-    options: DataTypes.JSONB,
+    options: DataTypes.ARRAY(DataTypes.STRING),
   }, {});
   questions.associate = function (models) {
     // associations can be defined here

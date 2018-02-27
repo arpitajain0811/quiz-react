@@ -19,7 +19,7 @@ module.exports = {
       type: Sequelize.STRING,
     },
     options: {
-      type: Sequelize.JSONB,
+      type: Sequelize.ARRAY(Sequelize.STRING),
     },
     createdAt: {
       allowNull: true,

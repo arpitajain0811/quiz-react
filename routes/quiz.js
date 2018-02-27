@@ -28,6 +28,28 @@ const getAnswers = (questions) => {
   });
   return promiseArray;
 };
+const addQuestionsToTable = (questions) => {
+  const promiseArray = [];
+  questions.forEach((question) => {
+    const noOfOptions = Object.keys(question).length - 3;
+    const optionsArray = [];
+    for (let i = 0; i < noOfOptions; i += 1) {
+      const key = `option${i + 1}`;
+      optionsArray.push(question[key]);
+    }
+    const promise = new Promise((resolve) => {
+      Models.questions.create({
+        questionid: question.questionId,
+        question: question.question,
+        answer: question.answer,
+        options: optionsArray,
+      });
+      resolve(question);
+    });
+    promiseArray.push(promise);
+  });
+  return promiseArray;
+};
 
 const route = [
   {
@@ -39,6 +61,27 @@ const route = [
         const promiseArray = getAnswers(QuestionsObj.allQuestions);
         Promise.all(promiseArray).then(() => {
           reply(QuestionsObj.allQuestions);
+        });
+      });
+    },
+  },
+  {
+    method: 'POST',
+    path: '/questions',
+    handler: (request, response) => {
+      const QuestionsPromise = getQuestions();
+      QuestionsPromise.then((QuestionsObj) => {
+        const promiseArray = getAnswers(QuestionsObj.allQuestions);
+        Promise.all(promiseArray).then(() => {
+          Models.questions.destroy({ where: {} }).then(() => {
+            const promiseArray2 = addQuestionsToTable(QuestionsObj.allQuestions);
+            Promise.all(promiseArray2).then(() => {
+              response({
+                statusCode: 201,
+                message: 'Questions added to database',
+              });
+            });
+          });
         });
       });
     },
