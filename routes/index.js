@@ -1,3 +1,3 @@
 const quiz = require('./quiz.js');
 
-module.exports = [].concat(quiz);
+module.exports = [].concat(quiz.route);

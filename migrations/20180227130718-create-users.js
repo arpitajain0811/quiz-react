@@ -14,12 +14,15 @@ module.exports = {
     },
     score: {
       type: Sequelize.INTEGER,
+      defaultValue: 0,
     },
     totalscore: {
       type: Sequelize.INTEGER,
+      defaultValue: 0,
     },
     answers: {
       type: Sequelize.JSONB,
+      defaultValue: {},
     },
     createdAt: {
       allowNull: true,

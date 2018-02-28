@@ -106,5 +106,61 @@ const route = [
       });
     },
   },
+  {
+    method: 'PATCH',
+    path: '/user',
+    handler: (request, reply) => {
+      console.log('payload', request.payload);
+      const pl = JSON.parse(request.payload);
+      Models.users.update(
+        {
+          score: pl.score,
+          totalscore: pl.totalScore,
+          answers: pl.answers,
+        },
+        {
+          where: {
+            username: pl.username,
+          },
+        },
+      ).then((response) => {
+        reply(response);
+      });
+    },
+
+  },
+  {
+    method: 'PUT',
+    path: '/user',
+    handler: (request, reply) => {
+      console.log(request.payload);
+      Models.users.findOrCreate({
+        where: { username: request.payload },
+        defaults: { score: 0, totalscore: 0, answers: {} },
+      })
+        .then((response) => {
+          console.log(response);
+          reply(response[0]);
+        });
+    },
+  },
+  {
+    method: 'GET',
+    path: '/users',
+    handler: (request, reply) => {
+      Models.users.findAll({
+        order: [
+          ['score', 'DESC'],
+        ],
+      }).then((result) => {
+        reply(result);
+      });
+    },
+  },
 ];
-module.exports = route;
+module.exports = {
+  route,
+  getQuestions,
+  getAnswers,
+  addQuestionsToTable,
+};
